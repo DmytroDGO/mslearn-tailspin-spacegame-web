@@ -1,3 +1,5 @@
+trigger:
+- '*'
 pool:
   name: Windows DGO PC
 steps:
@@ -19,4 +21,3 @@ steps:
     command: test
     projects: '**/*.Tests.csproj'
     arguments: '--no-build --configuration Release'
-
