@@ -21,3 +21,5 @@ steps:
     command: test
     projects: '**/*.Tests.csproj'
     arguments: '--no-build --configuration Release'
+
+    
