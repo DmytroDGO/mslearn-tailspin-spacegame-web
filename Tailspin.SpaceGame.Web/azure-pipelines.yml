@@ -19,6 +19,14 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
 
+- task: NuGetCommand@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'Test Project/Tailspin.SpaceGame.Web.Models'
+    
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
   inputs:
@@ -37,10 +45,3 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
  
-- task: NuGetCommand@2
-  displayName: 'Restore project dependencies'
-  inputs:
-    command: 'restore'
-    restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
-    vstsFeed: 'Test Project/Tailspin.SpaceGame.Web.Models'
