@@ -2,24 +2,48 @@ trigger:
 - '*'
 pool:
   name: Windows DGO PC
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetSdkVersion: '3.1.300'
+
 steps:
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
+- task: UseDotNet@2
+  displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
   inputs:
-    command: restore
+    version: '$(dotnetSdkVersion)'
+
+- task: NuGetCommand@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'Test Project/Tailspin.SpaceGame.Web.Models'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: 'restore'
+    arguments: '--'
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Build the project - $(buildConfiguration)'
   inputs:
+    command: 'build'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: '**/*.csproj'
-    arguments: '--no-restore --configuration Release'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
+  displayName: 'Pack the project - $(buildConfiguration)'
   inputs:
-    command: test
-    projects: '**/*.Tests.csproj'
-    arguments: '--no-build --configuration Release'
+    command: 'pack'
+    projects: '**/*.csproj'
+    arguments: '--no-build --configuration $(buildConfiguration)'
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '1'
+    minorVersion: '0'
+    patchVersion: '0'
+ 
 
-    
