@@ -2,7 +2,7 @@ trigger:
 - '*'
 
 pool:
-  name: 'Windows DGO PC'
+  name: Windows DGO PC
 
 variables:
   buildConfiguration: 'Release'
