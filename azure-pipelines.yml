@@ -22,5 +22,5 @@ steps:
     projects: '**/*.Tests.csproj'
     arguments: '--no-build --configuration Release'
 
-- task: WhiteSource Bolt@21
+- task: WhiteSource Bolt@21.4.2.1
   displayName: 'Run WhiteSource Bolt'
